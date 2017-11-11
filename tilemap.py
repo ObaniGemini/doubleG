@@ -93,28 +93,37 @@ class TileMap:
             player.can_move[i] = True
 
         left, right, up, down = 0, 1, 2, 3
+
         x0 = int(player.next_pos[0]/self.size)
-        x1 = int((player.next_pos[0] - player.size - int_val(1/2))/self.size)
-        x2 = int((player.next_pos[0] + player.size + int_val(1/2))/self.size)
+
+        x_left1 = int((player.pos[0] - player.size - int_val(1/2))/self.size)
+        x_left2 = int((player.next_pos[0] - player.size - int_val(1/2))/self.size)
+
+        x_right1 = int((player.pos[0] + player.size + int_val(1/2))/self.size)
+        x_right2 = int((player.next_pos[0] + player.size + int_val(1/2))/self.size)
+
         y0 = int(player.next_pos[1]/self.size)
-        y1 = int((player.next_pos[1] - player.size - int_val(1/2))/self.size)
-        y2 = int((player.next_pos[1] + player.size + int_val(1/2))/self.size)
+
+        y_up1 = int((player.pos[1] - player.size - int_val(1/2))/self.size)
+        y_up2 = int((player.next_pos[1] - player.size - int_val(1/2))/self.size)
+
+        y_down1 = int((player.pos[1] + player.size + int_val(1/2))/self.size)
+        y_down2 = int((player.next_pos[1] + player.size + int_val(1/2))/self.size)
         
-        colliders = [(0,0), (0,0)]
 
         for index in self.tiles_index:
             if x0 == index[0]:
-                if y1 == index[1]:
+                if (y_up1 >= index[1] and y_up2 <= index[1]):
                     player.can_move[up] = False
                     player.collider[up] = index[1]
-                if y2 == index[1]:
+                if (y_down1 <= index[1] and y_down2 >= index[1]):
                     player.can_move[down] = False
                     player.collider[down] = index[1]
             if y0 == index[1]:
-                if x1 == index[0]:
+                if (x_left1 > index[0] and x_left2 <= index[0]):
                     player.can_move[left] = False
                     player.collider[left] = index[0]
-                if x2 == index[0]:
+                if (x_right1 <= index[0] and x_right2 >= index[0]):
                     player.can_move[right] = False
                     player.collider[right] = index[0]
 

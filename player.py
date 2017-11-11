@@ -79,14 +79,14 @@ class Player:
             pressed = True
             if self.can_move[down]:
                 if not self.jetpack_cooldown and self.jetpack_fuel > 0:
-                    self.apply_impulse(0, -0.6)
+                    self.apply_impulse(0, -0.8)
                     self.jetpack_fuel -= 8
                 else:
                     self.jetpack_cooldown = True
             else:
                 self.apply_impulse(0, -4)
         if self.jetpack_fuel < 80:
-            self.jetpack_fuel += 1
+            self.jetpack_fuel += 2
         elif self.jetpack_fuel == 80:
             self.jetpack_cooldown = False
 
@@ -116,7 +116,7 @@ class Player:
         if not self.can_move[right] and self.next_pos[0] >= self.pos[0]:
             self.next_pos = ((self.collider[right]*int_val(8)-self.size-int_val(1/2)), self.next_pos[1])
         if not self.can_move[up] and self.next_pos[1] <= self.pos[1]:
-            self.next_pos = (self.next_pos[0], (self.collider[up]*int_val(8)+self.size+int_val(1/2)))
+            self.next_pos = (self.next_pos[0], ((self.collider[up]+1)*int_val(8)+self.size+int_val(1/2)))
         if not self.can_move[down] and self.next_pos[1] >= self.pos[1]:
             self.next_pos = (self.next_pos[0], (self.collider[down]*int_val(8)-self.size-int_val(1/2)))
 

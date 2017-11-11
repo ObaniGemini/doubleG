@@ -71,7 +71,7 @@ class Main:
 
             self.background.anim_2()
 
-            timer.wait(5)
+            timer.wait(10) #Sets the speed of execution of the game
             
             self.window.blit(self.background_canvas, (0, 0))
             self.window.blit(self.main_canvas, (0, 0))
