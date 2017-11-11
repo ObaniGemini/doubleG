@@ -28,11 +28,10 @@ class Main:
 
 
     def update_screen(self, fullscreen):
-        self._size = (int_val(80), int_val(60))
         if fullscreen:
-            self._window = pygame.display.set_mode(self.size, pygame.DOUBLEBUF | pygame.FULLSCREEN)
+            self.window = pygame.display.set_mode(self.size, pygame.DOUBLEBUF | pygame.FULLSCREEN)
         else:
-            self._window = pygame.display.set_mode(self.size, pygame.DOUBLEBUF)
+            self.window = pygame.display.set_mode(self.size, pygame.DOUBLEBUF)
         
 
 
@@ -64,10 +63,15 @@ class Main:
                 else:
                     switching = True
                     menu = True
+            elif self.scene.signal == "Force Quit":
+                done = True
+            elif self.scene.signal == "Display Mode":
+                fullscreen = not fullscreen
+                self.update_screen(fullscreen)
 
-            #self._background.anim_square()
+            self.background.anim_2()
 
-            timer.wait(10)
+            timer.wait(5)
             
             self.window.blit(self.background_canvas, (0, 0))
             self.window.blit(self.main_canvas, (0, 0))

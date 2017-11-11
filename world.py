@@ -44,16 +44,13 @@ class World:
     def update(self, canvas):
         self.set_updating(False)
         self.update_canvas()
-        self.player.update(canvas)
+        self.player.update()
         self.tilemap.update(canvas, self.player)
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                self.signal = "Quit"
+                self.signal = "Force Quit"
             elif event.type == pygame.KEYDOWN:
                 k = event.key
                 if k == pygame.K_ESCAPE:
                     self.signal = "Quit"
-                elif k == pygame.K_F11:
-                    fullscreen = not fullscreen
-                    self.update_screen(fullscreen)

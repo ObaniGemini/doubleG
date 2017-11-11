@@ -1,35 +1,37 @@
 import pygame
 
 from screen import *
-from collision import *
 
 
 
 class Tile:
 
-    def __init__(self, pos, size):
-        self.pos = pos
+    def __init__(self, index, size):
+        self.index = index
         self.size = size
-        self.shape = SquareCollision(pygame.Rect(self.pos[0] - self.size, self.pos[1] - self.size, self.pos[0] + self.size, self.pos[0] + self.size))
+        self.shape = pygame.Rect((index[0]*self.size-int_val(1/2), index[1]*self.size-int_val(1/2)), (self.size+int_val(1), self.size+int_val(1)))
+        print(self.shape)
 
 
-    def draw_tile(self, tiles_pos, canvas):
+    def draw_tile(self, tiles_index, canvas):
         array_x = []
         array_y = []
-        for i in tiles_pos:
+        for i in tiles_index:
             array_x.append(i[0])
             array_y.append(i[1])
 
-        size = self.size
+        pos_x = (self.index[0]*self.size)
+        pos_y = (self.index[1]*self.size)
+        color = pygame.Color(0, 0, 0)
 
-        if not (self.pos[0] - size*2) in array_x:
-            pygame.draw.line(canvas, pygame.Color(0, 0, 0), ((self.pos[0] - size), (self.pos[1] - size)), ((self.pos[0] - size), (self.pos[1] + size)), 1)
-        if not (self.pos[0] + size*2) in array_x:
-            pygame.draw.line(canvas, pygame.Color(0, 0, 0), ((self.pos[0] + size), (self.pos[1] - size)), ((self.pos[0] + size), (self.pos[1] + size)), 1)
-        if not (self.pos[1] - size*2) in array_y:
-            pygame.draw.line(canvas, pygame.Color(0, 0, 0), ((self.pos[0] - size), (self.pos[1] - size)), ((self.pos[0] + size), (self.pos[1] - size)), 1)
-        if not (self.pos[1] + size*2) in array_y:
-            pygame.draw.line(canvas, pygame.Color(0, 0, 0), ((self.pos[0] - size), (self.pos[1] + size)), ((self.pos[0] + size), (self.pos[1] + size)), 1)
+#        if not self.index[0] in array_x:
+        pygame.draw.line(canvas, color, (pos_x, pos_y), (pos_x, (pos_y + self.size)), 1)
+#        if not (self.index[0] + 1) in array_x:
+        pygame.draw.line(canvas, color, (pos_x, pos_y), ((pos_x + self.size), pos_y), 1)
+#        if not self.index[1] in array_y:
+        pygame.draw.line(canvas, color, ((pos_x + self.size), pos_y), ((pos_x + self.size), (pos_y + self.size)), 1)
+#        if not (self.index[1] + 1) in array_y:
+        pygame.draw.line(canvas, color, (pos_x, (pos_y + self.size)), ((pos_x + self.size), (pos_y + self.size)), 1)
 
 
 
@@ -38,22 +40,22 @@ class TileMap:
 
     def __init__(self, camera):
         self.tiles = []
-        self.tiles_pos = []
+        self.tiles_index = []
         self.updated = False
         self.spawn_pos = (0,0)
         self.camera = camera
-        self.size = int_val(4)
+        self.size = int_val(8)
 
 
-    def add_square_tile(self, pos):
-        if not pos in self.tiles_pos:
-            self.tiles_pos.append(pos)
-            self.tiles.append(Tile(pos, self.size))
+    def add_square_tile(self, index):
+        if not index in self.tiles_index:
+            self.tiles_index.append(index)
+            self.tiles.append(Tile(index, self.size))
 
 
     def draw_square_tiles(self, canvas):
         for tile in self.tiles:
-            tile.draw_tile(self.tiles_pos, canvas)
+            tile.draw_tile(self.tiles_index, canvas)
 
 
     def convert_file(self):
@@ -70,14 +72,14 @@ class TileMap:
             j = 0
             while j < h_size:
                 column = line.pop(0)
-                pos = (self.size+self.size*j*2, self.size+self.size*i*2)
+                index = (j, i)
                 if column == 'x':
-                    self.add_square_tile(pos)
+                    self.add_square_tile(index)
                 if column == 'V':
-                    self.spawn_pos = pos
+                    self.spawn_pos = (self.size+index[0]*self.size, self.size+index[1]*self.size)
                 j += 1
             i += 1
-        self.canvas = pygame.Surface((self.size*2*(h_size+1), self.size*2*(v_size+1)), pygame.SRCALPHA)
+        self.canvas = pygame.Surface((self.size*(h_size+1), self.size*(v_size+1)), pygame.SRCALPHA)
         self.canvas.convert()
         self.draw_square_tiles(self.canvas)
         self.updated = True
@@ -88,13 +90,36 @@ class TileMap:
 
 
     def update(self, canvas, player):
-        checked = False
-        for tile in self.tiles:
-            if not checked:
-                if tile.shape.is_colliding(player.get_shape()):
-                    checked = True
-                    player.colliding = True
-        if not checked:
-            player.colliding = False
+
+        for i in range(4):
+            player.can_move[i] = True
+
+        left, right, up, down = 0, 1, 2, 3
+        x0 = int(player.next_pos[0]/self.size)
+        x1 = int((player.next_pos[0] - player.size - int_val(1/2))/self.size)
+        x2 = int((player.next_pos[0] + player.size + int_val(1/2))/self.size)
+        y0 = int(player.next_pos[1]/self.size)
+        y1 = int((player.next_pos[1] - player.size - int_val(1/2))/self.size)
+        y2 = int((player.next_pos[1] + player.size + int_val(1/2))/self.size)
+        
+        colliders = [(0,0), (0,0)]
+
+        for index in self.tiles_index:
+            if x0 == index[0]:
+                if y1 == index[1]:
+                    player.can_move[up] = False
+                    player.collider[up] = index[1]
+                if y2 == index[1]:
+                    player.can_move[down] = False
+                    player.collider[down] = index[1]
+            if y0 == index[1]:
+                if x1 == index[0]:
+                    player.can_move[left] = False
+                    player.collider[left] = index[0]
+                if x2 == index[0]:
+                    player.can_move[right] = False
+                    player.collider[right] = index[0]
+
+        player.update_player(canvas)
 
         canvas.blit(self.canvas, self.camera.pos)
