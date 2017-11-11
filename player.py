@@ -3,6 +3,8 @@ import pygame
 from screen import *
 from shapes import *
 
+
+
 class Player:
 
     def __init__(self, spawn_pos, camera):
@@ -19,6 +21,9 @@ class Player:
         self.can_move = [True, True, True, True]
         self.collider = [0, 0, 0, 0]
         self.force = (0.0, 0.0)
+
+        self.jetpack_cooldown = False
+        self.jetpack_fuel = 80
 
         self.update_shape()
 
@@ -73,17 +78,34 @@ class Player:
         if self.is_pressed(pygame.K_UP) and self.can_move[up]:
             pressed = True
             if self.can_move[down]:
-                if self.update_force()[1] > 0:
-                    self.apply_impulse(0, -0.4)
+                if not self.jetpack_cooldown and self.jetpack_fuel > 0:
+                    self.apply_impulse(0, -0.6)
+                    self.jetpack_fuel -= 8
                 else:
-                    self.apply_impulse(0, -0.2)
+                    self.jetpack_cooldown = True
             else:
                 self.apply_impulse(0, -4)
+        if self.jetpack_fuel < 80:
+            self.jetpack_fuel += 1
+        elif self.jetpack_fuel == 80:
+            self.jetpack_cooldown = False
+
 
         if self.can_move[down]:
             self.apply_impulse(0, 0.4)
 
         self.next_pos = self.update_pos(self.pos, self.update_force())
+
+
+    def update_hud(self, canvas):
+        if self.jetpack_fuel > 0:
+            taint = 0
+            if not self.jetpack_cooldown:
+                taint = self.jetpack_fuel*3
+
+            jetpack = pygame.Surface((int_val(self.jetpack_fuel), int_val(4)), pygame.SRCALPHA)
+            jetpack.fill(pygame.Color(255-taint, 0, 0, 150))
+            canvas.blit(jetpack, (0, 0))
 
 
     def update_player(self, canvas):
@@ -111,3 +133,5 @@ class Player:
         self.layer.add(self.images.draw_square((int_val(40), int_val(30)), self.size, 0))
         self.layer.draw(canvas)
         self.layer.empty()
+
+        self.update_hud(canvas)

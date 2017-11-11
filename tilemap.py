@@ -9,8 +9,6 @@ class Tile:
     def __init__(self, index, size):
         self.index = index
         self.size = size
-        self.shape = pygame.Rect((index[0]*self.size-int_val(1/2), index[1]*self.size-int_val(1/2)), (self.size+int_val(1), self.size+int_val(1)))
-        print(self.shape)
 
 
     def draw_tile(self, tiles_index, canvas):
