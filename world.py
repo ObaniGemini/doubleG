@@ -47,6 +47,7 @@ class World:
         self.player.update()
         self.tilemap.update(canvas, self.player)
         
+        self.signal = None
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.signal = "Force Quit"
@@ -54,3 +55,5 @@ class World:
                 k = event.key
                 if k == pygame.K_ESCAPE:
                     self.signal = "Quit"
+                elif k == pygame.K_F12:
+                    self.signal = "Save Screen"

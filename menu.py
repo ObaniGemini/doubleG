@@ -82,8 +82,11 @@ class Menu:
             if event.type == pygame.QUIT:
                 self.signal = "Force Quit"
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
+                k = event.key
+                if k == pygame.K_ESCAPE:
                     self.signal = "Quit"
+                elif k == pygame.K_F12:
+                    self.signal = "Save Screen"
 
             for button in self.buttons:
                 moving = False

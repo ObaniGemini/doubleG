@@ -45,6 +45,7 @@ class Main:
         self.scene = Menu(self.main_canvas)
 
         while not done:
+            saving = False
             self.main_canvas = pygame.Surface(self.size, pygame.SRCALPHA)
             if menu and switching:
                 self.scene = Menu(self.main_canvas)
@@ -68,6 +69,8 @@ class Main:
             elif self.scene.signal == "Display Mode":
                 fullscreen = not fullscreen
                 self.update_screen(fullscreen)
+            elif self.scene.signal == "Save Screen":
+                saving = True
 
             self.background.anim_2()
 
@@ -75,6 +78,9 @@ class Main:
             
             self.window.blit(self.background_canvas, (0, 0))
             self.window.blit(self.main_canvas, (0, 0))
+
+            if saving:
+                pygame.image.save(self.window, "saved_image.png")
             pygame.display.flip()
         pygame.quit()
 
