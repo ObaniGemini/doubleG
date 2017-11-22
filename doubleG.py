@@ -24,6 +24,8 @@ class Main:
         
         self.background_canvas.convert()
         self.main_canvas.convert()
+        self.mixer = pygame.mixer
+        self.mixer.init(frequency=11025, size=-8, channels=1, buffer=128)
 
 
 

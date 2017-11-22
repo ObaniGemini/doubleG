@@ -12,11 +12,7 @@ class BackgroundAnim:
     def __init__(self, canvas):
         self.bgcolor = pygame.Color(255, 255, 255, 255)
         self.size = (int_val(80), int_val(60))
-
-        self.background = pygame.sprite.Group()
-        self.shapes = Shapes(self.size)
         self.stored_shapes = []
-
 
         self.canvas = canvas
         self.reset()
@@ -32,15 +28,14 @@ class BackgroundAnim:
         if active:
             angle = self.value
 
-            self.background.add(self.shapes.draw_square((self.size[0]/2, self.size[1]/2), angle*0.75, angle*4, 1, self.side))
-            self.background.draw(self.canvas)
-
-            self.background.empty()
-
             if self.side > 1:
                 self.value -= 2
+                a = 1
             else:
                 self.value += 2
+                a = 0
+
+            draw_square(canvas, angle*0.75, angle*4, (self.size[0]/2, self.size[1]/2), 1, 255*a, 255*a, 255*a)
 
             if abs(self.value) >= 360:
                 self.value = 0
@@ -53,7 +48,7 @@ class BackgroundAnim:
         if active:
             self.value += 1
             time = self.value
-            if time > 10:
+            if time > 5:
                 self.reset()
                 
                 anchor_x1 = int_val(20)*randint(0, 3)
@@ -62,8 +57,8 @@ class BackgroundAnim:
                 anchor_x2 = int_val(20)*randint(1, 4)
                 anchor_y2 = int_val(15)*randint(1, 4)
 
-                canvas = pygame.Surface((abs(anchor_x2 - anchor_x1), abs(anchor_y2 - anchor_y1)), pygame.SRCALPHA)
-                canvas.fill(pygame.Color(randint(0, 100), randint(0, 100), randint(0, 100), 50))
+                canvas = pygame.Surface((abs(anchor_x2 - anchor_x1), abs(anchor_y2 - anchor_y1)))
+                canvas.fill(pygame.Color(randint(230, 250), randint(230, 250), randint(230, 250)))
                 self.stored_shapes.append([canvas, anchor_x1, anchor_y1])
                 
                 if len(self.stored_shapes) > 3:

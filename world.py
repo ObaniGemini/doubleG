@@ -57,3 +57,6 @@ class World:
                     self.signal = "Quit"
                 elif k == pygame.K_F12:
                     self.signal = "Save Screen"
+
+        if self.tilemap.signal == "End":
+            self.signal = "Quit"
