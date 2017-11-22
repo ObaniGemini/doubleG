@@ -54,9 +54,11 @@ class World:
             elif event.type == pygame.KEYDOWN:
                 k = event.key
                 if k == pygame.K_ESCAPE:
-                    self.signal = "Quit"
+                    self.signal = "Quit Game"
                 elif k == pygame.K_F12:
                     self.signal = "Save Screen"
 
         if self.tilemap.signal == "End":
-            self.signal = "Quit"
+            self.signal = "Quit Game"
+        elif self.tilemap.signal == "Die":
+            self.signal = "Restart"

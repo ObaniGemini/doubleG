@@ -128,20 +128,10 @@ class Player:
         if not self.can_move[down] and self.next_pos[1] > self.pos[1]:
             self.next_pos = (self.next_pos[0], (self.collider[down]*int_val(8)-self.size-int_val(1/2)))
 
-        
-        if self.next_pos[1] > 3000:
-            self.next_pos = self.spawn_pos
-            self.force = (0, 0)
-
-
         self.pos = self.next_pos
         self.camera.update_to((self.pos[0]-int_val(40), self.pos[1]-int_val(30)))
         self.update_shape()
 
         draw_square(canvas, self.size, self.angle, (int_val(40)-self.size*2, int_val(30)-self.size*2))
-
-#        self.layer.add(self.images.draw_square((int_val(40), int_val(30)), self.size, 0))
-#        self.layer.draw(canvas)
-#        self.layer.empty()
 
         self.update_hud(canvas)

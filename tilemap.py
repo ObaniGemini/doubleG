@@ -98,11 +98,11 @@ class TileMap:
 
         i = 0
         goals = []
-        v_size = len(level_text)
+        self.v_size = len(level_text)
         h_size = len(level_text[0])
         self.goals = None
 
-        while i < v_size:
+        while i < self.v_size:
             line = level_text.pop(0)
             j = 0
             while j < h_size:
@@ -187,4 +187,7 @@ class TileMap:
                 self.goals.update(canvas, self.camera.pos)
             else:
                 self.signal = "End"
+
+        if player.pos[1]//self.size > (self.v_size+4):
+            self.signal = "Die"
         player.update_player(canvas)

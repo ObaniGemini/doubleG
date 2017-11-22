@@ -4,6 +4,8 @@ import pygame
 
 from screen import *
 from bg_anim import *
+from transitions import *
+
 from world import *
 from menu import *
 
@@ -15,12 +17,15 @@ class Main:
 
         self.size = (int_val(80), int_val(60))
         self.window = pygame.display.set_mode(self.size, pygame.DOUBLEBUF)
+        self.signal = ""
         pygame.display.set_caption('DoubleG masterace gemplay OMGWTFBDSMHAX')
 
         self.background_canvas = pygame.Surface(self.size)
         self.background = BackgroundAnim(self.background_canvas)
         
         self.main_canvas = pygame.Surface(self.size, pygame.SRCALPHA)
+
+        self.transition = Transition()
         
         self.background_canvas.convert()
         self.main_canvas.convert()
@@ -41,40 +46,67 @@ class Main:
         done = False
         fullscreen = False
         timer = pygame.time
-        
-        menu = True
-        switching = False
         self.scene = Menu(self.main_canvas)
+        switching = False
 
         while not done:
             saving = False
+
+            self.background.anim_2()
+
             self.main_canvas = pygame.Surface(self.size, pygame.SRCALPHA)
-            if menu and switching:
-                self.scene = Menu(self.main_canvas)
-            elif not menu and switching:
-                self.scene = World(self.main_canvas)
-            switching = False
+
+            if switching:
+                if self.signal == "Start Menu":
+                    self.scene = Menu(self.main_canvas)
+                elif self.signal == "Start Game":
+                    self.scene = World(self.main_canvas)
+                elif self.signal == "Restart":
+                    self.scene = World(self.main_canvas)
+                switching = False
+                self.signal = ""
 
             self.scene.update(self.main_canvas)
-            
+
             if self.scene.signal == "Play":
-                switching = True
-                menu = False
+                self.signal = "Start Game"
+            elif self.scene.signal == "Restart":
+                self.signal = "Restart"
+            elif self.scene.signal == "Quit Game":
+                self.signal = "Start Menu"
             elif self.scene.signal == "Quit":
-                if menu:
-                    done = True
-                else:
-                    switching = True
-                    menu = True
+                self.signal = "Quit"
             elif self.scene.signal == "Force Quit":
-                done = True
+                self.signal = "Force Quit"
             elif self.scene.signal == "Display Mode":
                 fullscreen = not fullscreen
                 self.update_screen(fullscreen)
             elif self.scene.signal == "Save Screen":
                 saving = True
 
-            self.background.anim_2()
+
+            if self.transition.state == "Started":
+                self.transition.anim(self.main_canvas)
+            elif self.transition.state == "Start":
+                self.transition.type = "Open"
+                self.transition.anim(self.main_canvas)
+            elif self.transition.state == "" and (self.signal == "Quit" or self.signal == "Start Game" or self.signal == "Start Menu" or self.signal == "Restart"):
+                self.transition.type = "Close"
+                self.transition.anim(self.main_canvas)
+            elif self.transition.state == "" and self.transition.type == "Close":
+                self.transition.type = "Open"
+                self.transition.anim(self.main_canvas)
+
+
+            if self.transition.state == "Ended":
+                if self.signal == "Quit":
+                    done = True
+                elif self.signal == "Start Game" or self.signal == "Start Menu" or self.signal == "Restart":
+                    switching = True
+                self.transition.state = ""
+
+            if self.signal == "Force Quit":
+                done = True
 
             timer.wait(10) #Sets the speed of execution of the game
             

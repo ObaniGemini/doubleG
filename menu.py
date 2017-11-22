@@ -58,6 +58,8 @@ class CheckButton:
 
 
 
+
+
 class Menu:
 
     def __init__(self, canvas):
@@ -94,7 +96,7 @@ class Menu:
                     if button.shape.collidepoint(event.pos):
                         button.hovered = True
                         moving = True
-                    
+                
                 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if button.hovered and event.button == 1:
