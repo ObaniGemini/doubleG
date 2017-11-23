@@ -41,7 +41,7 @@ class Goals:
         self.key_colors = []
         for i in indexes:
             self.keys.append(i)
-            self.key_colors.append([randint(50, 150), randint(50, 150), randint(50, 150)])
+            self.key_colors.append([randint(25, 100), randint(25, 100), randint(25, 100)])
 
         self.size = size
         self.angle = 0

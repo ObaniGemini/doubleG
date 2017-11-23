@@ -58,7 +58,7 @@ class BackgroundAnim:
                 anchor_y2 = int_val(15)*randint(1, 4)
 
                 canvas = pygame.Surface((abs(anchor_x2 - anchor_x1), abs(anchor_y2 - anchor_y1)))
-                canvas.fill(pygame.Color(randint(230, 250), randint(230, 250), randint(230, 250)))
+                canvas.fill(pygame.Color(randint(220, 240), randint(220, 240), randint(220, 240)))
                 self.stored_shapes.append([canvas, anchor_x1, anchor_y1])
                 
                 if len(self.stored_shapes) > 3:

@@ -71,8 +71,11 @@ class Player:
         if self.is_pressed(pygame.K_RIGHT) and self.can_move[right]:
             side += 1
 
-        if side == 0 or abs(self.angle) == 360:
-            self.angle = 0
+        if side == 0 or abs(self.angle) == 80:
+            if abs(self.angle) <= 80 and self.angle != 0:
+                self.angle += 10 * (self.angle/abs(self.angle))
+            else:
+                self.angle = 0
         else:
             self.angle += 10*side
 
