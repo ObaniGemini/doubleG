@@ -1,0 +1,29 @@
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+x                                                               x
+x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+x xLLLLLLLLLLLLLLLLLLLLLLLLLLLLx xr                          lx x
+x xLLLLLLLLLLLLLLLLLLLLLLLLLLLLx xr                          lx x
+x xLLLLLLLLLLLLLLLLLLLLLLLLLLLLx xr                          lx x
+x xLLLLLLLLLLLLLLLLLLLLLLLLLLLLx xr K     xxxxxxxxxxxxxxxr   lx x
+x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xr       x             xr   lx x
+x                                xr       xxxxxxxxxxxxx xr   lx x
+x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxr                   x xr   lx x
+x xr                                                  x xr   lx x
+x xr                            G                     x xr   lx x
+x xr                                          K       x xr   lx x
+x xr                          lxxxr                   xxxr   lx x
+x xr               lxxxxr     lx xr         lxxxr            lx x
+x xr               lx  xr     lx xr         lxLxr            lx x
+x xr        K      lx  xr     lx xr         lxxxr            lx x
+x xr               lxxxxr     lx xr          ddd             lx x
+x xr                dddd      lx xr                          lx x
+x xr                          lx xr                   K      lx x
+x xr                          lxxxr                          lx x
+x xr                                                         lx x
+x xr                                                         lx x
+x xr                                                         lx x
+x xLLLJxxJLLLxxxr               V               lxxxLLLJxxJLLLx x
+x xLLLLLLLLLLx xr                               lx xLLLLLLLLLLx x
+x xxxxxxxxxxxx xr          lxxxxxxxxxr          lx xxxxxxxxxxxx x
+x              xr          lx       xr          lx              x
+xxxxxxxxxxxxxxxxr          lxxxxxxxxxr          lxxxxxxxxxxxxxxxx

@@ -1,6 +1,6 @@
 import pygame
-from math import *
 
+from math import *
 from shape import Shape
 
 def draw_square (canvas, scale, rot, pos, mode=0, r=0, g=0, b=0, a=255):

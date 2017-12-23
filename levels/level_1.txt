@@ -1,17 +1,16 @@
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-x                                                                           x
-x                                                                           x
-x                                                                           x
-x                            G                                     K        x
-x                                           K                               x
-x                  x       xxxxx                              xxxxxxxxxxx   x
-x                  x       x   x         xxxxxxx              x         x   x
-x                  x       x   x         x     x              xxxxxxxxxxx   x
-x                  x       x   x                                            x
-x                  x       xxxxx                                            x
-x                  x                                                        x
-x                  x                             xxx  K                     x
-x                  x                             x x                        x
-x V                x  K              xxx         xxxxxxxxxx       xxxxxxxxxxx
-x                  x                 x x                x x       x x        
-xxxxxxxxxxxxxxx    xxxxxxxxxxxxxxxxxxxxx                xxx       xxx        
+xxxxxxxxxxxxxxxxxxxxxxxxxx
+x                        x
+x                        x
+x                        x
+x                        x
+x                        x
+x                        x
+x                        x
+x                        x
+x                        x
+x                        x
+x                        x
+x V                    G x
+x       xxx    xxx       x
+xxxxxxxxx x    x xxxxxxxxx
+        xxx    xxx             

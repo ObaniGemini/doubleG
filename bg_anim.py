@@ -17,6 +17,8 @@ class BackgroundAnim:
         self.canvas = canvas
         self.reset()
     
+
+    
     def reset(self):
         self.canvas.fill(pygame.Color(255, 255, 255, 255))
         self.value = 0      #arbitrary value being used in different ways (time, angle,...)
@@ -30,12 +32,12 @@ class BackgroundAnim:
 
             if self.side > 1:
                 self.value -= 2
-                a = 1
+                c = (255, 255, 255, 255)
             else:
                 self.value += 2
-                a = 0
-
-            draw_square(canvas, angle*0.75, angle*4, (self.size[0]/2, self.size[1]/2), 1, 255*a, 255*a, 255*a)
+                c = (randint(0, 200), randint(0, 200), randint(0, 200), 50)
+            ANGLE = abs(angle)
+            draw_square(self.canvas, ANGLE*0.75, angle*4, (self.canvas.get_width()//2-ANGLE*1.5, self.canvas.get_height()//2-ANGLE*1.5), 0, c[0], c[1], c[2], c[3])
 
             if abs(self.value) >= 360:
                 self.value = 0

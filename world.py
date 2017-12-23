@@ -3,21 +3,30 @@ import pygame
 from shapes import *
 from tilemap import *
 from player import *
+from sound import *
+
+
 
 class World:
 
-    def __init__(self, canvas):
+    def __init__(self, canvas, level):
+        self.name = "World"
         self.size = (int_val(80), int_val(60))
         self.canvas = canvas
         self.updating = False
         self.camera = Camera()
         self.tilemap = TileMap(self.camera)
-        self.restart_level()
+        self.load_level(level)
         self.signal = None
+        add_sound("enter")
+        set_volume("enter", 0.25)
+        play_sound("enter")
 
+    def clear(self):
+        pass    
 
-    def restart_level(self):
-        self.tilemap.convert_file()
+    def load_level(self, level):
+        self.tilemap.convert_file(level)
         self.player = Player(self.tilemap.get_spawn(), self.camera) 
 
 
@@ -46,8 +55,9 @@ class World:
         self.update_canvas()
         self.player.update()
         self.tilemap.update(canvas, self.player)
+
         
-        self.signal = None
+        self.signal = ""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.signal = "Force Quit"
@@ -57,8 +67,11 @@ class World:
                     self.signal = "Quit Game"
                 elif k == pygame.K_F12:
                     self.signal = "Save Screen"
+#                elif k == pygame.K_RETURN:     #Debug tool
+#                    self.signal = "Win"
 
         if self.tilemap.signal == "End":
-            self.signal = "Quit Game"
+            self.signal = "Win"
+
         elif self.tilemap.signal == "Die":
             self.signal = "Restart"
